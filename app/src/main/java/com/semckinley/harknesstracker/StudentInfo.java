@@ -5,11 +5,11 @@ package com.semckinley.harknesstracker;
  */
 
 public class StudentInfo {
-    static String name; //Student's name
-    static int count; //How many times student spoke
-    static float time;//The amount of time the student for which the student spoke
+     String name; //Student's name
+     int count; //How many times student spoke
+     double time;//The amount of time the student for which the student spoke
 
-    public StudentInfo(String name, int count, float time){
+    public StudentInfo(String name, int count, double time){
         this.name = name;
         this.count = count;
         this.time = time;
@@ -33,7 +33,7 @@ public class StudentInfo {
     public int getCount(){
         return this.count;
     }
-    public float getTime(){
+    public double getTime(){
         return this.time;
     }
 }

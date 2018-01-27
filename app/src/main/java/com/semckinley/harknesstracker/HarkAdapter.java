@@ -19,22 +19,30 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
     private static final String TAG = HarkAdapter.class.getSimpleName();
     private int mStudentItems;
     private  String[] mStudentNames;
+    //private HarkAdapter.OnClickHandler hOnClickHandler;
 
 
-     ArrayList<StudentInfo> mStudentInfoList = new ArrayList<>();
+    //String[] mStudentNameList = new String[15];
+    ArrayList<StudentInfo> mStudentInfoList;
 
-    public HarkAdapter(int nameOfStudent){
-        mStudentItems = nameOfStudent;
+    public interface HarkAdapterOnClickHandler  {
+        void onClick(int count);
+    }
+
+    public HarkAdapter(String[] nameOfStudent){
+        mStudentInfoList = new ArrayList<StudentInfo>();
 
 
-        mStudentNames = new String[]{"Bob", "Jane", "Mary", "Stephen", "Ethan", "Linus", "Cherish", "Allen", "Baelfyre", "Catharine", "Daviana", "Sydney", "Nick", "Dakota", "Eleven"};
-        for(int i = 0; i<15; i++){
+        for(int i = 0; i < 15; i++) {
 
-            mStudentInfoList.add( new StudentInfo(mStudentNames[i], i, 0));
-            Log.i(TAG, mStudentNames[i]);
+
+            mStudentInfoList.add(new StudentInfo(nameOfStudent[i], 0, 0.0));
+            Log.i("Tag", mStudentInfoList.get(i).getName().toString());
         }
 
-    }
+        }
+
+
     //This is called to create the viewholders
 
 
@@ -78,8 +86,10 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         }
         void bind(int listIndex){
 
-            listStudentView.setText(mStudentInfoList.get(listIndex).getName());
-            Log.i(TAG, "This is the " + listIndex + "attempt");
+            listStudentView.setText(mStudentInfoList.get(listIndex).getName()
+                    + "\n" + mStudentInfoList.get(listIndex).getCount() + "\n"
+                    + mStudentInfoList.get(listIndex).getTime());
+
         }
     }
 

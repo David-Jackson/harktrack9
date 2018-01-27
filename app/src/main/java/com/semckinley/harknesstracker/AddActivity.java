@@ -47,7 +47,7 @@ public class AddActivity extends AppCompatActivity {
 
                 }
 
-                Toast.makeText(AddActivity.this, mStudentName.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(AddActivity.this, mStudentName.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

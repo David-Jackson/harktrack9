@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     @Override
     public void onStudentClick(int clickedStudentIndex) {
         Context context = this;
-        Toast.makeText(context, clickedStudentIndex, Toast.LENGTH_LONG).show();
+        String name = mStudentInfoList[clickedStudentIndex].toString();
+        Toast.makeText(context, name, Toast.LENGTH_LONG).show();
     }
 }

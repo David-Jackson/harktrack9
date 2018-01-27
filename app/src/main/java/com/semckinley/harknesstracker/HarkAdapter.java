@@ -75,13 +75,14 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         return mStudentInfoList.size();
     }
 
-    class StudentViewHolder extends RecyclerView.ViewHolder{
+    class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView listStudentView;
 
         public StudentViewHolder(View itemView){
             super(itemView);
 
             listStudentView = itemView.findViewById(R.id.tv_item_student);
+            itemView.setOnClickListener(this);
 
         }
         void bind(int listIndex){
@@ -91,15 +92,16 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
                     + mStudentInfoList.get(listIndex).getTime());
 
         }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            int count = mStudentInfoList.get(adapterPosition).getCount();
+            mOnClickListener.onStudentClick(count);
+        }
     }
 
-   /* public static class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.card_text_view)
-        TextView textView;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-        }*/
+
 
 }
 

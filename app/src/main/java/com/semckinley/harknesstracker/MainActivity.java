@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkStudentClickListener{
 
     private static final int NUM_STUDENTS = 15;
     //Final form should not require this, but gets information from the data
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity  {
     private RecyclerView mStudentList;
     private String[] mStudentInfoList;
 
-
+//hi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +48,15 @@ public class MainActivity extends AppCompatActivity  {
         mStudentList.setHasFixedSize(true);
         //going with true at first for simplicity sake, as it was in the example. However, classes can vary in size so may make this set to false in future
         Log.i("tag", mStudentInfoList[5]);
-        mAdapter = new HarkAdapter(mStudentInfoList);
+        mAdapter = new HarkAdapter(mStudentInfoList, this);
         mStudentList.setAdapter(mAdapter);
 
     }
 
 
-
-
+    @Override
+    public void onStudentClick(int clickedStudentIndex) {
+        Context context = this;
+        Toast.makeText(context, clickedStudentIndex, Toast.LENGTH_LONG).show();
+    }
 }

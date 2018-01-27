@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.semckinley.harknesstracker.data.StudentInfo;
+
 import java.util.ArrayList;
 
 /**
@@ -97,7 +99,10 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             int count = mStudentInfoList.get(adapterPosition).getCount();
-            mOnClickListener.onStudentClick(count);
+            count++;
+            mStudentInfoList.get(adapterPosition).setCount(count);
+            mOnClickListener.onStudentClick(adapterPosition);
+            notifyDataSetChanged();
         }
     }
 

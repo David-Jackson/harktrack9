@@ -1,4 +1,4 @@
-package com.semckinley.harknesstracker;
+package com.semckinley.harknesstracker.data;
 
 /**
  * Created by Mordor on 1/21/2018.

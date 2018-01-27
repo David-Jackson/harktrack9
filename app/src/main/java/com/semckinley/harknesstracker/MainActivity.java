@@ -2,6 +2,7 @@ package com.semckinley.harknesstracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     private RecyclerView mStudentList;
     private String[] mStudentInfoList;
 
-//hi
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     public void onStudentClick(int clickedStudentIndex) {
         Context context = this;
         String name = mStudentInfoList[clickedStudentIndex].toString();
+
         Toast.makeText(context, name, Toast.LENGTH_LONG).show();
     }
 }

@@ -1,5 +1,6 @@
 package com.semckinley.harknesstracker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements HarkAdapter.OnClickHandler{
+public class MainActivity extends AppCompatActivity  {
 
     private static final int NUM_STUDENTS = 15;
     //Final form should not require this, but gets information from the data
@@ -46,10 +48,12 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.OnCli
         mStudentList.setHasFixedSize(true);
         //going with true at first for simplicity sake, as it was in the example. However, classes can vary in size so may make this set to false in future
         Log.i("tag", mStudentInfoList[5]);
-        mAdapter = new HarkAdapter(mStudentInfoList); //The argument will not be needed once reading from data is accomplished
+        mAdapter = new HarkAdapter(mStudentInfoList);
         mStudentList.setAdapter(mAdapter);
 
     }
+
+
 
 
 }

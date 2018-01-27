@@ -19,19 +19,19 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
     private static final String TAG = HarkAdapter.class.getSimpleName();
     private int mStudentItems;
     private  String[] mStudentNames;
-    //private HarkAdapter.OnClickHandler hOnClickHandler;
 
+    final private HarkStudentClickListener mOnClickListener;
 
     //String[] mStudentNameList = new String[15];
     ArrayList<StudentInfo> mStudentInfoList;
 
-    public interface HarkAdapterOnClickHandler  {
-        void onClick(int count);
+    public interface HarkStudentClickListener  {
+        void onStudentClick(int clickedStudentIndex);
     }
 
-    public HarkAdapter(String[] nameOfStudent){
+    public HarkAdapter(String[] nameOfStudent, HarkStudentClickListener listener){
         mStudentInfoList = new ArrayList<StudentInfo>();
-
+        mOnClickListener = listener;
 
         for(int i = 0; i < 15; i++) {
 

@@ -1,6 +1,8 @@
 package com.semckinley.harknesstracker;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.semckinley.harknesstracker.data.StudentContract;
+import com.semckinley.harknesstracker.data.StudentDbHelper;
 import com.semckinley.harknesstracker.data.StudentInfo;
 
 import java.util.ArrayList;
@@ -21,6 +25,9 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
     private static final String TAG = HarkAdapter.class.getSimpleName();
     private int mStudentItems;
     private  String[] mStudentNames;
+    SQLiteDatabase mDb;
+    StudentDbHelper mStudentDbHelper;
+    Cursor mCursor;
 
     final private HarkStudentClickListener mOnClickListener;
 
@@ -31,18 +38,15 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         void onStudentClick(int clickedStudentIndex);
     }
 
-    public HarkAdapter(String[] nameOfStudent, HarkStudentClickListener listener){
+    public HarkAdapter(Cursor cursor, HarkStudentClickListener listener){
+        mCursor = cursor;
         mStudentInfoList = new ArrayList<StudentInfo>();
         mOnClickListener = listener;
-
-        for(int i = 0; i < 15; i++) {
-
-
-            mStudentInfoList.add(new StudentInfo(nameOfStudent[i], 0, 0.0));
-            Log.i("Tag", mStudentInfoList.get(i).getName().toString());
-        }
+        mDb = mStudentDbHelper.getReadableDatabase();
 
         }
+
+
 
 
     //This is called to create the viewholders
@@ -64,12 +68,13 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
 
     @Override
     public void onBindViewHolder(HarkAdapter.StudentViewHolder holder, int position) {
-        Log.d(TAG, "#" + position);
-        StudentInfo studentName = mStudentInfoList.get(position);
+        if(!mCursor.moveToPosition(position))
+            return;
 
-        for (int j = 0; j < 15; j++){
-            //Log.i(TAG, mStudentNames[j]);
-        }
+        String name = mCursor.getString(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_STUDENT_NAME));
+        int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
+        float time = mCursor.getFloat(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_TIME));
+
         holder.bind(position);
     }
     @Override

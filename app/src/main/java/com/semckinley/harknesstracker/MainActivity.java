@@ -2,6 +2,7 @@ package com.semckinley.harknesstracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,9 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.semckinley.harknesstracker.data.StudentContract;
+import com.semckinley.harknesstracker.data.StudentDbHelper;
 
 import java.util.ArrayList;
 
@@ -26,17 +30,18 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
 
     private RecyclerView mStudentList;
     private String[] mStudentInfoList;
-
-
+    StudentDbHelper mStudentDbHelper;
+    SQLiteDatabase mDb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        mStudentInfoList = intent.getStringArrayExtra("Student Names");
 
+        Intent intent = getIntent();
+       // mStudentInfoList = intent.getStringArrayExtra("Student Names");
+        mStudentDbHelper = new StudentDbHelper(this);
         //The above pretty much has to happen in all 'main activities' to get things rolling. At least as far as I know at this time
 
         mStudentList = (RecyclerView) findViewById(R.id.rv_students); //this creates the link between the java variable mStudentList and the Recyclerview in the layout xml file
@@ -48,10 +53,12 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
         //This links the recyclerview to the layoutmanager I've chosen at this time. Initially linear.
 
 
-        mStudentList.setHasFixedSize(true);
+        mStudentList.setHasFixedSize(false);
         //going with true at first for simplicity sake, as it was in the example. However, classes can vary in size so may make this set to false in future
-        Log.i("tag", mStudentInfoList[5]);
-        mAdapter = new HarkAdapter(mStudentInfoList, this);
+        mDb = mStudentDbHelper.getReadableDatabase();
+        Cursor cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
+                StudentContract.StudentEntry.COLUMN_COUNT);
+        mAdapter = new HarkAdapter(cursor, this);
         mStudentList.setAdapter(mAdapter);
 
     }

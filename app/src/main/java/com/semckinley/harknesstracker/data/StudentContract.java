@@ -14,13 +14,13 @@ public class StudentContract {
 
     public static final class StudentEntry implements BaseColumns{
 
-        public static final String TABLE_NAME = "Student Discussion Information";
+        public static final String TABLE_NAME = "studentinformation";
         //Used internally as the name of the database table
-        public static final String COLUMN_STUDENT_NAME = "student_name";
+        public static final String COLUMN_STUDENT_NAME = "studentName";
         //Used internally as the name of the column containing the student name
-        public static final String COLUMN_COUNT = "How many times spoken";
+        public static final String COLUMN_COUNT = "speakCount";
         //Used internally as the name of the column containing the number of times the student has spoken during the discussion
-        public static final String COLUMN_TIME = "How long the student spoke";
+        public static final String COLUMN_TIME = "timeSpoke";
         //Used internally as the name of the column containing the amount of time the student spoke during the discussion
     }
 }

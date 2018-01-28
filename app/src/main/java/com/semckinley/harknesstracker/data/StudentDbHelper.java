@@ -17,7 +17,7 @@ public class StudentDbHelper extends SQLiteOpenHelper{
 
      */
 
-    public static final String DATABASE_NAME = "studentInfo.db";
+    private static final String DATABASE_NAME = "studentinfo.db";
     private static final int DATABASE_VERSION = 1;
     //initializing database version for future incrementation to upgrade database after changes
     //Create the constructor
@@ -33,8 +33,8 @@ public class StudentDbHelper extends SQLiteOpenHelper{
                 "CREATE TABLE " + StudentContract.StudentEntry.TABLE_NAME + " (" +
                         StudentContract.StudentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         StudentContract.StudentEntry.COLUMN_STUDENT_NAME + " TEXT NOT NULL, " +
-                        StudentContract.StudentEntry.COLUMN_COUNT + " INTEGER, " +
-                        StudentContract.StudentEntry.COLUMN_TIME + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); ";
+                        StudentContract.StudentEntry.COLUMN_COUNT + " INTEGER NOT NULL, "
+                + StudentContract.StudentEntry.COLUMN_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP" + "); ";
         db.execSQL(SQL_CREATE_STUDENT_TABLE);
     }
 
@@ -42,6 +42,7 @@ public class StudentDbHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //The example I'm following in creating drops the table if there is a version change and creates a new one...
         db.execSQL("DROP TABLE IF EXISTS " + StudentContract.StudentEntry.TABLE_NAME);//TODO Study SQLiteDatabases
+        onCreate(db);
 
     }
 }

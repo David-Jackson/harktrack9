@@ -43,7 +43,7 @@ public class AddActivity extends AppCompatActivity {
         //get a writeable database as we will be adding students...this may change as inputing data from a file and creating readable databases instead
         mDb = dbHelper.getWritableDatabase();
         //create the cursor to read from the database
-        //Cursor cursor; //more is needed here but not sure how it fits with my code yet
+        Cursor cursor; //more is needed here but not sure how it fits with my code yet
 
         mStudentName = (EditText) findViewById(R.id.et_student_name);
 
@@ -62,7 +62,7 @@ public class AddActivity extends AppCompatActivity {
                 }});
 
             mSubmitButton = (Button) findViewById(R.id.submit_button);
-            mSubmitButton.setOnClickListener(new View.OnClickListener(){
+           mSubmitButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(AddActivity.this, MainActivity.class);

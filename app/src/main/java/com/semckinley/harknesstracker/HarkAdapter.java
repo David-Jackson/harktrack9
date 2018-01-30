@@ -80,8 +80,7 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
        // float time = mCursor.getFloat(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_TIME));
 
-        holder.listStudentView.setText(name
-                + "\n" + count);
+        holder.listStudentView.setText(name + "\n" + count);
     }
     @Override
     public int getItemCount() {
@@ -98,25 +97,13 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
             itemView.setOnClickListener(this);
 
         }
-       /* public void swapCursor(Cursor newCursor) {
-            // Always close the previous mCursor first
-            if (mCursor != null) mCursor.close();
-            mCursor = newCursor;
-            if (newCursor != null) {
-                // Force the RecyclerView to refresh
-                notifyDataSetChanged();
-            }*/
-      /*  void bind(int listIndex){
 
-
-
-        }*/
 
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
 
-           if(!mCursor.moveToPosition(adapterPosition)) return;
+           /*if(!mCursor.moveToPosition(adapterPosition)) return;
             mStudentDbHelper = new StudentDbHelper(mContext);
             mDb = mStudentDbHelper.getWritableDatabase();
             int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
@@ -124,7 +111,7 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
             mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
             + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + adapterPosition + " ");
             mCursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
-                    StudentContract.StudentEntry.COLUMN_COUNT);
+                    StudentContract.StudentEntry.COLUMN_COUNT);*/
 
             mOnClickListener.onStudentClick(adapterPosition);
 

@@ -1,5 +1,6 @@
 package com.semckinley.harknesstracker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
         //going with true at first for simplicity sake, as it was in the example. However, classes can vary in size so may make this set to false in future
         mDb = mStudentDbHelper.getReadableDatabase();
         cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
-                StudentContract.StudentEntry.COLUMN_COUNT);
+                null);
         mAdapter = new HarkAdapter(cursor, this, context);
         mStudentList.setAdapter(mAdapter);
 
@@ -70,15 +71,18 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     public void onStudentClick(int clickedStudentIndex) {
         Context context = this;
 
-        /*if(!cursor.moveToPosition(clickedStudentIndex)) return;
+        if(!cursor.moveToPosition(clickedStudentIndex)) return;
         mStudentDbHelper = new StudentDbHelper(context);
         mDb = mStudentDbHelper.getWritableDatabase();
         int count = cursor.getInt(cursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
         count++;
-        mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
-                + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + clickedStudentIndex + " ");
+        ContentValues cv = new ContentValues();
+        cv.put(StudentContract.StudentEntry.COLUMN_COUNT, count);
+                mDb.update(StudentContract.StudentEntry.TABLE_NAME, cv, StudentContract.StudentEntry._ID + "=" + clickedStudentIndex, null);
+        //mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
+              //  + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + clickedStudentIndex + " ");
         cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
-                StudentContract.StudentEntry.COLUMN_COUNT);*/
+                null);
         mAdapter.notifyDataSetChanged();
 
     }

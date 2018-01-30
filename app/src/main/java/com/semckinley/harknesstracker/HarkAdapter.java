@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.semckinley.harknesstracker.data.StudentContract;
 import com.semckinley.harknesstracker.data.StudentDbHelper;
@@ -26,8 +27,9 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
     private int mStudentItems;
     private  String[] mStudentNames;
     SQLiteDatabase mDb;
-    StudentDbHelper mStudentDbHelper;
+    static StudentDbHelper mStudentDbHelper;
     Cursor mCursor;
+    static Context mContext;
 
     final private HarkStudentClickListener mOnClickListener;
 
@@ -38,11 +40,13 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         void onStudentClick(int clickedStudentIndex);
     }
 
-    public HarkAdapter(Cursor cursor, HarkStudentClickListener listener){
+    public HarkAdapter(Cursor cursor, HarkStudentClickListener listener, Context context){
         mCursor = cursor;
-        mStudentInfoList = new ArrayList<StudentInfo>();
+        //mStudentInfoList = new ArrayList<StudentInfo>();
+        mContext = context;
+
         mOnClickListener = listener;
-        mDb = mStudentDbHelper.getReadableDatabase();
+
 
         }
 
@@ -55,6 +59,7 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
     @Override
     public HarkAdapter.StudentViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
+
         int layoutIdForStudentItem = R.layout.student_list;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
@@ -73,13 +78,14 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
 
         String name = mCursor.getString(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_STUDENT_NAME));
         int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
-        float time = mCursor.getFloat(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_TIME));
+       // float time = mCursor.getFloat(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_TIME));
 
-        holder.bind(position);
+        holder.listStudentView.setText(name
+                + "\n" + count);
     }
     @Override
     public int getItemCount() {
-        return mStudentInfoList.size();
+        return mCursor.getCount();
     }
 
     class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -92,22 +98,36 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
             itemView.setOnClickListener(this);
 
         }
-        void bind(int listIndex){
+       /* public void swapCursor(Cursor newCursor) {
+            // Always close the previous mCursor first
+            if (mCursor != null) mCursor.close();
+            mCursor = newCursor;
+            if (newCursor != null) {
+                // Force the RecyclerView to refresh
+                notifyDataSetChanged();
+            }*/
+      /*  void bind(int listIndex){
 
-            listStudentView.setText(mStudentInfoList.get(listIndex).getName()
-                    + "\n" + mStudentInfoList.get(listIndex).getCount() + "\n"
-                    + mStudentInfoList.get(listIndex).getTime());
 
-        }
+
+        }*/
 
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            int count = mStudentInfoList.get(adapterPosition).getCount();
+
+            if(!mCursor.moveToPosition(adapterPosition)) return;
+            mStudentDbHelper = new StudentDbHelper(mContext);
+            mDb = mStudentDbHelper.getWritableDatabase();
+            int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
             count++;
-            mStudentInfoList.get(adapterPosition).setCount(count);
+            mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
+            + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + adapterPosition + " ");
+            mCursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
+                    StudentContract.StudentEntry.COLUMN_COUNT);
+
             mOnClickListener.onStudentClick(adapterPosition);
-            notifyDataSetChanged();
+
         }
     }
 

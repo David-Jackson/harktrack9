@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     private String[] mStudentInfoList;
     StudentDbHelper mStudentDbHelper;
     SQLiteDatabase mDb;
+    static Cursor cursor;
 
 
     @Override
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-       // mStudentInfoList = intent.getStringArrayExtra("Student Names");
+        Context context = MainActivity.this;
+
         mStudentDbHelper = new StudentDbHelper(this);
         //The above pretty much has to happen in all 'main activities' to get things rolling. At least as far as I know at this time
 
@@ -56,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
         mStudentList.setHasFixedSize(false);
         //going with true at first for simplicity sake, as it was in the example. However, classes can vary in size so may make this set to false in future
         mDb = mStudentDbHelper.getReadableDatabase();
-        Cursor cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
+        cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
                 StudentContract.StudentEntry.COLUMN_COUNT);
-        mAdapter = new HarkAdapter(cursor, this);
+        mAdapter = new HarkAdapter(cursor, this, context);
         mStudentList.setAdapter(mAdapter);
 
     }
@@ -67,8 +69,13 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     @Override
     public void onStudentClick(int clickedStudentIndex) {
         Context context = this;
-        String name = mStudentInfoList[clickedStudentIndex].toString();
 
-        Toast.makeText(context, name, Toast.LENGTH_LONG).show();
+
+
+       // mAdapter.sw( mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
+               // StudentContract.StudentEntry.COLUMN_COUNT));
+       // String name = mStudentInfoList[clickedStudentIndex].toString();
+
+        //Toast.makeText(context, name, Toast.LENGTH_LONG).show();
     }
 }

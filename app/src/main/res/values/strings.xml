@@ -3,4 +3,5 @@
     <string name="add_button">Add</string>
     <string name="add_name">Enter Student Name Here</string>
     <string name = "submit_button">Submit</string>
+    <string name = "clear_button">Clear Database</string>
 </resources>

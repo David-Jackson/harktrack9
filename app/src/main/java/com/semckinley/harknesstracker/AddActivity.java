@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText mStudentName;
     private Button mAddButton;
     private Button mSubmitButton;
+    private Button mClearButton;
     private SQLiteDatabase mDb;
 
 
@@ -51,14 +53,15 @@ public class AddActivity extends AppCompatActivity {
         mAddButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                    if(mStudentName != null){
                     ContentValues cv = new ContentValues();
                     cv.put(StudentContract.StudentEntry.COLUMN_STUDENT_NAME,  mStudentName.getText().toString());
                     cv.put(StudentContract.StudentEntry.COLUMN_COUNT, 0);
                    mDb.insert(StudentContract.StudentEntry.TABLE_NAME, null, cv);
 
 
-                    mStudentName.setText("");
+                    mStudentName.setText("");}
+                    else{mStudentName.setText("No name Entered");}
                 }});
 
             mSubmitButton = (Button) findViewById(R.id.submit_button);
@@ -70,6 +73,15 @@ public class AddActivity extends AppCompatActivity {
                     startActivity(intent);}
 
         });
+           mClearButton = (Button) findViewById(R.id.clear_button);
+           mClearButton.setOnClickListener(new View.OnClickListener(){
+               @Override
+               public void onClick(View v){
+
+
+                   mDb.delete(StudentContract.StudentEntry.TABLE_NAME, null, null);
+               }
+           });
 
     }
 

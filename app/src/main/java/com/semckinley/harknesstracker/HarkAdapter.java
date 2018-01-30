@@ -116,7 +116,7 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
 
-            if(!mCursor.moveToPosition(adapterPosition)) return;
+           if(!mCursor.moveToPosition(adapterPosition)) return;
             mStudentDbHelper = new StudentDbHelper(mContext);
             mDb = mStudentDbHelper.getWritableDatabase();
             int count = mCursor.getInt(mCursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));

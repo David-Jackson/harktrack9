@@ -70,12 +70,16 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
     public void onStudentClick(int clickedStudentIndex) {
         Context context = this;
 
+        /*if(!cursor.moveToPosition(clickedStudentIndex)) return;
+        mStudentDbHelper = new StudentDbHelper(context);
+        mDb = mStudentDbHelper.getWritableDatabase();
+        int count = cursor.getInt(cursor.getColumnIndex(StudentContract.StudentEntry.COLUMN_COUNT));
+        count++;
+        mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
+                + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + clickedStudentIndex + " ");
+        cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
+                StudentContract.StudentEntry.COLUMN_COUNT);*/
+        mAdapter.notifyDataSetChanged();
 
-
-       // mAdapter.sw( mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
-               // StudentContract.StudentEntry.COLUMN_COUNT));
-       // String name = mStudentInfoList[clickedStudentIndex].toString();
-
-        //Toast.makeText(context, name, Toast.LENGTH_LONG).show();
     }
 }

@@ -118,8 +118,9 @@ public class HarkAdapter extends RecyclerView.Adapter<HarkAdapter.StudentViewHol
         }
     }
 
-
-
+    public void setCursor(Cursor mCursor) {
+        this.mCursor = mCursor;
+    }
 }
 
 

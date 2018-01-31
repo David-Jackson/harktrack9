@@ -78,11 +78,12 @@ public class MainActivity extends AppCompatActivity implements HarkAdapter.HarkS
         count++;
         ContentValues cv = new ContentValues();
         cv.put(StudentContract.StudentEntry.COLUMN_COUNT, count);
-                mDb.update(StudentContract.StudentEntry.TABLE_NAME, cv, StudentContract.StudentEntry._ID + "=" + clickedStudentIndex, null);
+        int updateQuantiy = mDb.update(StudentContract.StudentEntry.TABLE_NAME, cv, StudentContract.StudentEntry._ID + "=" + (clickedStudentIndex + 1), null);
         //mDb.execSQL("Update " + StudentContract.StudentEntry.TABLE_NAME + " SET "+ StudentContract.StudentEntry.COLUMN_COUNT +"="
               //  + count + " WHERE " + StudentContract.StudentEntry._ID + "=" + clickedStudentIndex + " ");
         cursor = mDb.query(StudentContract.StudentEntry.TABLE_NAME, null, null, null, null, null,
                 null);
+        mAdapter.setCursor(cursor);
         mAdapter.notifyDataSetChanged();
 
     }
